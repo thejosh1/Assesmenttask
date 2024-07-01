@@ -1,0 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart' as fui;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pridera_assesment_task/core/extensions/context_extensions.dart';
+import 'package:pridera_assesment_task/core/services/injection_container/injector_container.dart';
+import 'package:pridera_assesment_task/core/utility/app_routes.dart';
+import 'package:pridera_assesment_task/src/auth/data/model/local_user_model.dart';
+import 'package:pridera_assesment_task/src/auth/presentation/auth/auth_bloc.dart';
+import 'package:pridera_assesment_task/src/auth/presentation/views/signIn_screen.dart';
+import 'package:pridera_assesment_task/src/auth/presentation/views/sign_up_screen.dart';
+import 'package:pridera_assesment_task/src/main_page/main_page.dart';
+import 'package:pridera_assesment_task/src/onboarding/data/datasource/onboarding_local_datasource.dart';
+import 'package:pridera_assesment_task/src/onboarding/presentation/cubit/onboarding_cubit.dart';
+import 'package:pridera_assesment_task/src/onboarding/presentation/views/onboarding_screen.dart';
+import 'package:pridera_assesment_task/src/onboarding/presentation/views/splash_screen.dart';
+import 'package:pridera_assesment_task/src/todo/presentation/TodoListCubit/todo_list_cubit.dart';
+import 'package:pridera_assesment_task/src/todo/presentation/views/add_todo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+part 'routes.main.dart';

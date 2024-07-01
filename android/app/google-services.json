@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "131104623372",
+    "project_id": "pridera-assessment",
+    "storage_bucket": "pridera-assessment.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131104623372:android:cff8905d546330bc689729",
+        "android_client_info": {
+          "package_name": "com.example.pridera_assesment_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "131104623372-eikus208n59fg2tivsd5nnpkli1t2pvg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pridera_assesment_task",
+            "certificate_hash": "bc8d578bf424f87ffff2560a889fe96a2c2678d6"
+          }
+        },
+        {
+          "client_id": "131104623372-1qk5una6rrgce8dgv1180fir6st5mbv6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACf1ljY35Od2kP_EHw5tr6W53uI0kvAdc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "131104623372-1qk5una6rrgce8dgv1180fir6st5mbv6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "131104623372-kjt6m55bj7u11cgusk7b183bb9i6j1q4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.prideraAssesmentTask"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
