@@ -86,7 +86,7 @@ void main() {
       'emits [CreatingTodo, TodoError] when create todo is called',
       build: () {
         when(() => createTodo(any())).thenAnswer((_) async => Left(
-            ServerFailure(message: 'Something went wrong', statusCode: '500')));
+            ServerFailure(message: 'Something went wrong', statusCode: '500'),),);
         return todoCubit;
       },
       act: (cubit) => cubit.createTodo(tCreateTodoParams),
@@ -124,7 +124,7 @@ void main() {
       'emits [UpdatingTodo, TodoError] when update todo is called',
       build: () {
         when(() => updateTodo(any())).thenAnswer((_) async => Left(
-            ServerFailure(message: 'Something went wrong', statusCode: '500')));
+            ServerFailure(message: 'Something went wrong', statusCode: '500'),),);
         return todoCubit;
       },
       act: (cubit) => cubit.updateTodo(tUpdateTodoParams),

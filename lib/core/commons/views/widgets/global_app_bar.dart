@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pridera_assesment_task/core/commons/views/widgets/nested_back_button.dart';
 import 'package:pridera_assesment_task/core/res/colors.dart';
 

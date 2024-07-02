@@ -8,7 +8,7 @@ import 'package:pridera_assesment_task/src/auth/domain/entities/user.dart';
 import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
-  final tUserModel = LocalUserModel.empty();
+  const tUserModel = LocalUserModel.empty();
 
   test(
     'should be a subclass of [LocalUser] entity',

@@ -1,10 +1,8 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pridera_assesment_task/core/commons/app/todo_provider.dart';
 import 'package:pridera_assesment_task/core/commons/views/utils/app_utils.dart';
 import 'package:pridera_assesment_task/core/commons/views/widgets/global_app_bar.dart';
 import 'package:pridera_assesment_task/core/extensions/context_extensions.dart';
@@ -38,86 +36,88 @@ class _TodoScreenState extends State<TodoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<TodoCubit, TodoState>(
-      listener: (context, state) {
-        if (state is TodoError) {
-          AppUtils.showSnackBar(context, state.errorMessage);
-        } else if (state is TodoUpdated) {
-          AppUtils.showSnackBar(context, 'Todo Updated');
-        } else if (state is TodoDeleted) {
-          AppUtils.showSnackBar(context, 'Todo Deleted');
-        }
+    return WillPopScope(
+      onWillPop: () async {
+        // await context.read<TodoListCubit>().getTodoLists();
+        await context.read<TodoCubit>().getTodos();
+        return true;
       },
-      child: Scaffold(
-        appBar: GlobalAppBar(titleText: ''),
-        body: Padding(
-          padding: EdgeInsets.only(left: 16.sp, top: 24.h, right: 28.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 32.sp,
-                  color: AppColors.textColor,
-                ),
+      child: BlocConsumer<TodoCubit, TodoState>(
+        listener: (context, state) {
+          if (state is TodoError) {
+            AppUtils.showSnackBar(context, state.errorMessage);
+          } else if (state is TodoUpdated) {
+            AppUtils.showSnackBar(
+                context, 'Todo Updated',);
+          } else if (state is TodoDeleted) {
+            AppUtils.showSnackBar(
+                context, 'Todo Deleted',);
+          }
+        },
+        builder: (context, state) {
+          return Scaffold(
+            appBar: GlobalAppBar(titleText: ''),
+            body: Padding(
+              padding: EdgeInsets.only(left: 16.sp, top: 24.h, right: 28.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 32.sp,
+                      color: AppColors.textColor,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  _buildTodoList(context, state),
+                  SizedBox(height: 24.h),
+                  _buildAddTodoButton(context),
+                ],
               ),
-              SizedBox(height: 16.h),
-              BlocBuilder<TodoCubit, TodoState>(
-                builder: (context, state) {
-                  if (state is LoadingTodos) {
-                    return Center(
-                      child: Lottie.asset(MediaRes.loadingAnimation1),);
-                  } else if (state is TodoLoaded) {
-                    final todoItems = state.todos
-                        .where((todo) => todo.listId == widget.listId)
-                        .toList();
-                    return _buildTodoList(
-                      context,
-                      todoItems as List<TodoModel>,
-                    );
-                  } else  if(state is TodoLoaded && state.todos.isEmpty){
-                    return const Center(
-                      child: Text('No Todo Yet please add a todo'),
-                    );
-                  }
-                  return Center(
-                    child: Lottie.asset(MediaRes.loadingAnimation1),);
-                },
-              ),
-              SizedBox(height: 24.h),
-              _buildAddTodoButton(context),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildTodoList(BuildContext context, List<TodoModel> todoItems) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: todoItems.length,
-      itemBuilder: (_, index) {
-        final item = todoItems[index];
-        return Column(
-          children: [
-            Row(
-              children: [
-                _buildCheckbox(context, item),
-                SizedBox(width: 10.w),
-                _buildTodoText(item),
-                const Spacer(),
-                _buildDeleteButton(context, item),
-              ],
-            ),
-            SizedBox(height: 10.h),
-            SizedBox(height: 24.h),
-          ],
-        );
-      },
-    );
+  Widget _buildTodoList(BuildContext context, TodoState state) {
+    if (state is LoadingTodos) {
+      return Center(child: Lottie.asset(MediaRes.loadingAnimation1));
+    } else if (state is TodoLoaded) {
+      final todoItems =
+          state.todos.where((todo) => todo.listId == widget.listId).toList();
+      if (todoItems.isEmpty) {
+        return const Center(child: Text('No Todo Yet please add a todo'));
+      }
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: todoItems.length,
+        itemBuilder: (_, index) {
+          final item = todoItems[index] as TodoModel;
+          return Column(
+            children: [
+              Row(
+                children: [
+                  _buildCheckbox(context, item),
+                  SizedBox(width: 10.w),
+                  _buildTodoText(item),
+                  const Spacer(),
+                  _buildDeleteButton(context, item),
+                ],
+              ),
+              SizedBox(height: 10.h),
+              SizedBox(height: 24.h),
+            ],
+          );
+        },
+      );
+    } else if (state is TodoError) {
+      return Center(child: Text(state.errorMessage));
+    }
+    return Center(child: Lottie.asset(MediaRes.loadingAnimation1));
   }
 
   Widget _buildCheckbox(BuildContext context, TodoModel item) {
@@ -185,14 +185,18 @@ class _TodoScreenState extends State<TodoScreen> {
   Widget _buildAddTodoButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
+        Navigator.of(context)
+            .push(
           MaterialPageRoute(
             builder: (BuildContext context) => BlocProvider(
               create: (_) => sl<TodoCubit>(),
               child: AddTodoItem(listId: widget.listId),
             ),
           ),
-        );
+        )
+            .then((_) {
+          context.read<TodoCubit>().getTodos();
+        });
       },
       child: SizedBox(
         width: double.maxFinite,

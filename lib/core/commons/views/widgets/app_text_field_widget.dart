@@ -72,7 +72,7 @@ class AppTextFieldWidgets extends StatelessWidget {
         contentPadding: EdgeInsets.only(
           left: width ?? 16.w,
           top: height ?? 16.h,
-          bottom: bottomHeight ?? 0
+          bottom: bottomHeight ?? 0,
 
         ),
         filled: filled,

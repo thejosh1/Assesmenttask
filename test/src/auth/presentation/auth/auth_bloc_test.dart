@@ -59,11 +59,11 @@ void main() {
   );
 
   group('sign in Event', () {
-    final tUser = LocalUserModel.empty();
+    const tUser = LocalUserModel.empty();
     blocTest<AuthBloc, AuthState>(
       'should emit [AuthLoading, SignedIn] when [SignedInEvent is added]',
       build: () {
-        when(() => signIn(any())).thenAnswer((_) async => Right(tUser));
+        when(() => signIn(any())).thenAnswer((_) async => const Right(tUser));
         return authBloc;
       },
       act: (bloc) => bloc.add(
@@ -74,7 +74,7 @@ void main() {
       ),
       expect: () => [
         const AuthLoading(),
-        SignedIn(tUser),
+        const SignedIn(tUser),
       ],
       verify: (_) {
         verify(
@@ -112,7 +112,7 @@ void main() {
   });
 
   group('sign up Event', () {
-    final tUser = LocalUserModel.empty();
+    const tUser = LocalUserModel.empty();
     blocTest<AuthBloc, AuthState>(
       'should emit [AuthLoading, SignedUp] when [SignedUpEvent is added]',
       build: () {
@@ -169,12 +169,12 @@ void main() {
   });
 
   group('Google signIn event', () {
-    final tUser = LocalUserModel.empty();
+    const tUser = LocalUserModel.empty();
     //sign in with google
     blocTest<AuthBloc, AuthState>(
       'should emit [AuthLoading] and [SignedInState] when sign in event is added',
       build: () {
-        when(() => googleSignIn()).thenAnswer((_) async => Right(tUser));
+        when(() => googleSignIn()).thenAnswer((_) async => const Right(tUser));
         return authBloc;
       },
       act: (bloc) => bloc.add(const SignInWithGoogleEvent()),

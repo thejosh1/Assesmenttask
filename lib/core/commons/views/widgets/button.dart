@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pridera_assesment_task/core/res/media_res.dart';
 
 class kButton extends StatelessWidget {
   const kButton({
@@ -27,7 +26,7 @@ class kButton extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Spacer(),
+          const Spacer(),
           Text(
             title,
             style: TextStyle(

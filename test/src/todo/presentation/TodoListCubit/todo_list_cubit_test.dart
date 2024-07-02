@@ -17,7 +17,7 @@ void main() {
   late GetAllTodoListsUsecase getAllTodoList;
   late TodoListCubit todoListCubit;
 
-  final tTodoList = TodoListModel.empty();
+  const tTodoList = TodoListModel.empty();
   final tCreateTodoListParams = CreateTodoListParams(todoList: tTodoList);
 
   setUp(() {
@@ -63,7 +63,7 @@ void main() {
       'emits [CreatingTodoList, TodoListError] when create todo is called',
       build: () {
         when(() => createTodoList(any())).thenAnswer((_) async => Left(
-            ServerFailure(message: 'Something went wrong', statusCode: '500')));
+            ServerFailure(message: 'Something went wrong', statusCode: '500'),),);
         return todoListCubit;
       },
       act: (cubit) => cubit.createTodoList(tCreateTodoListParams),

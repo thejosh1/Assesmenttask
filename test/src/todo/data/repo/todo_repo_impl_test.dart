@@ -81,7 +81,7 @@ void main() {
             todoId: tTodo.id,
             todo: tTodo,
             isCompleted: tTodo.isCompleted,
-          )).called(1);
+          ),).called(1);
       verifyNoMoreInteractions(remoteDataSrc);
     });
 
@@ -125,7 +125,7 @@ void main() {
         'successful', () async {
       when(() => remoteDataSrc.deleteTodo(
           listId: any(named: 'listId'),
-          itemId: any(named: 'itemId'))).thenAnswer(
+          itemId: any(named: 'itemId'),),).thenAnswer(
         (_) async => Future.value,
       );
       final result = await repoImpl.deleteTodo(

@@ -65,7 +65,7 @@ class AuthRepoImpl implements AuthRepo {
   }) async {
     try {
       await _remoteDataSource.signUp(
-          email: email, password: password, fullName: fullName);
+          email: email, password: password, fullName: fullName,);
       return const Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message, statusCode: e.statusCode));

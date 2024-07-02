@@ -44,69 +44,75 @@ class _AddTodoState extends State<AddTodo> {
           Navigator.pop(context);
         }
       },
-      child: Scaffold(
-        appBar: GlobalAppBar(),
-        body: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              AppTextFieldWidgets(
-                controller: titleController,
-                filled: false,
-                obscureText: false,
-                readOnly: false,
-                keyboardType: TextInputType.text,
-                overrideValidator: false,
-                hintText: 'Title',
-                hintStyle: TextStyle(
-                  fontSize: 32.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.lightTitle,
+      child: WillPopScope(
+        onWillPop: () async {
+          await context.read<TodoListCubit>().getTodoLists();
+          return true;
+        },
+        child: Scaffold(
+          appBar: GlobalAppBar(titleText: ''),
+          body: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                AppTextFieldWidgets(
+                  controller: titleController,
+                  filled: false,
+                  obscureText: false,
+                  readOnly: false,
+                  keyboardType: TextInputType.text,
+                  overrideValidator: false,
+                  hintText: 'Create Profile',
+                  hintStyle: TextStyle(
+                    fontSize: 32.sp,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.lightTitle,
+                  ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    final todoList = TodoListModel.empty().copyWith(
-                      title: titleController.text.trim(),
-                    );
-                    final todoListParams = CreateTodoListParams(
-                      todoList: todoList,
-                    );
-                    context.read<TodoListCubit>().createTodoList(
-                          todoListParams,
-                        );
-                  }
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(left: 16.w),
-                  child: SizedBox(
-                    width: double.maxFinite,
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.add,
-                          size: 20.sp,
-                          color: AppColors.lightText,
-                        ),
-                        SizedBox(
-                          width: 13.w,
-                        ),
-                        Text(
-                          'Add main task',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.sp,
-                            decoration: TextDecoration.underline,
+                GestureDetector(
+                  onTap: () {
+                    if (formKey.currentState!.validate()) {
+                      final todoList = const TodoListModel.empty().copyWith(
+                        title: titleController.text.trim(),
+                      );
+                      final todoParams = CreateTodoListParams(
+                        todoList: todoList,
+                      );
+                      context.read<TodoListCubit>().createTodoList(
+                        todoParams,
+                      );
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 16.w),
+                    child: SizedBox(
+                      width: double.maxFinite,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.add,
+                            size: 20.sp,
                             color: AppColors.lightText,
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            width: 13.w,
+                          ),
+                          Text(
+                            'Add main task',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
+                              decoration: TextDecoration.underline,
+                              color: AppColors.lightText,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pridera_assesment_task/core/res/colors.dart';
-import 'package:pridera_assesment_task/core/res/media_res.dart';
 import 'package:pridera_assesment_task/src/todo/domain/entities/todo_item.dart';
 
 class GridCard extends StatelessWidget {
@@ -110,7 +109,7 @@ class GridCard extends StatelessWidget {
                         ],
                       ),
                     );
-                  }),
+                  },),
             )
           else
             const Center(

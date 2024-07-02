@@ -14,7 +14,7 @@ void main() {
 
   const todoItem = TodoItem.empty();
   const tTodoItemsList = <TodoItem>[todoItem];
-  final tTodoList = const TodoList.empty();
+  const tTodoList = TodoList.empty();
 
   setUp(() {
     repo = MockTodoListRepo();
@@ -29,7 +29,7 @@ void main() {
     ).thenAnswer((_) async => const Right(null));
 
     final result = await usecase(
-      CreateTodoListParams(todoList: tTodoList),
+      const CreateTodoListParams(todoList: tTodoList),
     );
     expect(result, equals(const Right<dynamic, void>(null)));
     verify(() => repo.createTodoList(todoList: tTodoList))

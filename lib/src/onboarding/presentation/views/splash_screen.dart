@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:lottie/lottie.dart';
+
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pridera_assesment_task/core/res/media_res.dart';
 import 'package:pridera_assesment_task/core/utility/app_routes.dart';
 

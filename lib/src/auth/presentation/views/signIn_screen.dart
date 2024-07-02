@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pridera_assesment_task/core/commons/app/user_provider.dart';
 import 'package:pridera_assesment_task/core/commons/views/utils/app_utils.dart';
 import 'package:pridera_assesment_task/core/commons/views/widgets/button.dart';

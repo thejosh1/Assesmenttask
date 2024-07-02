@@ -37,7 +37,7 @@ void main() {
       'should add a given todo to the firebase collection',
       () async {
         //Arrange
-        final todoList = TodoListModel.empty();
+        const todoList = TodoListModel.empty();
 
         //act
         await remoteDataSrc.createTodoList(todoList);
@@ -57,11 +57,11 @@ void main() {
       'should return a List<TodoList> when the call is successful',
       () async {
         final expectedTodos = [
-          TodoListModel.empty().copyWith(
+          const TodoListModel.empty().copyWith(
             id: '2',
             title: 'Title 1',
           ),
-          TodoListModel.empty().copyWith(
+          const TodoListModel.empty().copyWith(
             title: 'Title 2',
             id:  '1',
           ),

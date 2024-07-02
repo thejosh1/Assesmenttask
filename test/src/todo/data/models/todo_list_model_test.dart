@@ -10,7 +10,7 @@ import '../../../../fixtures/fixture_reader.dart';
 
 
 void main() {
-  final tTodoListModel = TodoListModel.empty();
+  const tTodoListModel = TodoListModel.empty();
 
   final tMap = jsonDecode(fixture('todo_list.json')) as DataMap;
   tMap['items'] = <TodoItem>[const TodoItem.empty()];
@@ -21,7 +21,7 @@ void main() {
 
   group('empty', () {
     test('should return a [TodoListModel] with empty data', () {
-      final result = TodoListModel.empty();
+      const result = TodoListModel.empty();
       expect(result.title, '_empty.title');
     });
   });

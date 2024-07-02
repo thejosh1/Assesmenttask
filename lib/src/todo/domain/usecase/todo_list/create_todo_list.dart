@@ -18,7 +18,7 @@ class CreateTodoListUsecase
 class CreateTodoListParams extends Equatable {
   const CreateTodoListParams({required this.todoList});
 
-  CreateTodoListParams.empty() : this(todoList: TodoList.empty());
+  const CreateTodoListParams.empty() : this(todoList: const TodoList.empty());
 
   final TodoList todoList;
 

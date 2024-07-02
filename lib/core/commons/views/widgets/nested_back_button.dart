@@ -10,13 +10,14 @@ class NestedBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      onPopInvoked: (_) async {
+    return WillPopScope(
+      onWillPop: () async {
         try {
           context.pop();
         } catch (_) {
           Navigator.of(context).pop();
         }
+        return true;
       },
       child: GestureDetector(
         onTap: () {
@@ -54,7 +55,7 @@ class NestedBackButton extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 66.w,
+                width: 90.w,
               ),
               if (titleText!.isNotEmpty)
                 Text(

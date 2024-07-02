@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:pridera_assesment_task/core/usecases/usecase.dart';
 import 'package:pridera_assesment_task/core/utility/typedef.dart';
 import 'package:pridera_assesment_task/src/todo/domain/entities/todo_list.dart';

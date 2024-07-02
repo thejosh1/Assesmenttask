@@ -30,7 +30,7 @@ class AppRoute {
     }
   }
 
-  static pop<T extends Object>([T? result]) {
+  static void pop<T extends Object>([T? result]) {
     return sl<NavigatorService>().pop(result);
   }
 }

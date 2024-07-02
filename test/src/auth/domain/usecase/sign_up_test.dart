@@ -29,7 +29,7 @@ void main() {
 
     final result = await usecase(
       const SignUpParams(
-          email: tEmail, password: tPassword, fullName: tFullName),
+          email: tEmail, password: tPassword, fullName: tFullName,),
     );
 
     expect(result, equals(const Right<dynamic, void>(null)));

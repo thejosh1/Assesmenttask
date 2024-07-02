@@ -22,7 +22,7 @@ class HomeViewWithoutData extends StatelessWidget {
                     MediaRes.homeViewImage,
                   ),
                   fit: BoxFit.cover,
-                )),
+                ),),
           ),
           SizedBox(
             height: 24.h,

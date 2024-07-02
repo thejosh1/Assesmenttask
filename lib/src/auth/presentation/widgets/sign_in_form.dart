@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconly/iconly.dart';
 import 'package:pridera_assesment_task/core/res/colors.dart';
 import 'package:pridera_assesment_task/src/auth/presentation/widgets/textFields.dart';
 

@@ -15,7 +15,7 @@ void main() {
   late TodoListRemoteDataSrc remoteDataSrc;
   late TodoListRepoImpl repoImpl;
 
-  final tTodoList = TodoListModel.empty();
+  const tTodoList = TodoListModel.empty();
   const tId = 'test id';
 
   setUp(() {

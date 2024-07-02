@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pridera_assesment_task/core/commons/views/utils/app_utils.dart';
 import 'package:pridera_assesment_task/core/res/colors.dart';
 import 'package:pridera_assesment_task/core/res/media_res.dart';
@@ -8,6 +9,7 @@ import 'package:pridera_assesment_task/core/res/media_res.dart';
 import 'package:pridera_assesment_task/src/home/presentation/views/widgets/grid/grid_view.dart';
 import 'package:pridera_assesment_task/src/todo/domain/entities/todo_list.dart';
 import 'package:pridera_assesment_task/src/todo/presentation/TodoCubit/todo_cubit.dart';
+import 'package:pridera_assesment_task/src/todo/presentation/TodoListCubit/todo_list_cubit.dart';
 
 class HomeViewWithData extends StatefulWidget {
   const HomeViewWithData({
@@ -22,12 +24,13 @@ class HomeViewWithData extends StatefulWidget {
   State<HomeViewWithData> createState() => _HomeViewWithDataState();
 }
 
-class _HomeViewWithDataState extends State<HomeViewWithData> with WidgetsBindingObserver {
+class _HomeViewWithDataState extends State<HomeViewWithData>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _refreshTodos();
+    _refreshData();
   }
 
   @override
@@ -39,49 +42,64 @@ class _HomeViewWithDataState extends State<HomeViewWithData> with WidgetsBinding
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      _refreshTodos();
+      _refreshData();
     }
   }
 
-  void _refreshTodos() {
+  void _refreshData() {
+    context.read<TodoListCubit>().getTodoLists();
     context.read<TodoCubit>().getTodos();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TodoCubit, TodoState>(
-      listener: (_, state) {
-        if (state is TodoError) {
+    return BlocListener<TodoListCubit, TodoListState>(
+      listener: (context, state) {
+        if (state is TodoListError) {
           AppUtils.showSnackBar(context, state.errorMessage);
         }
       },
-      builder: (context, state) {
-        return Scaffold(
-          body: RefreshIndicator(
-            onRefresh: () async {
-              _refreshTodos();
-            },
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(child: _buildHeader()),
-                SliverToBoxAdapter(child: SizedBox(height: 24.h)),
-                if (state is LoadingTodos)
-                  const SliverFillRemaining(
-                    child: Center(child: CircularProgressIndicator()),
-                  )
-                else if (state is TodoLoaded)
-                  SliverToBoxAdapter(
-                    child: CardGrid(todoLists: widget.todoList, todoModel: state.todos),
-                  )
-                else
-                  const SliverFillRemaining(
-                    child: Center(child: Text('No todos available')),
-                  ),
-              ],
+      child: BlocConsumer<TodoCubit, TodoState>(
+        listener: (context, state) {
+          if (state is TodoError) {
+            AppUtils.showSnackBar(context, state.errorMessage);
+          }
+        },
+        builder: (context, todoState) {
+          return Scaffold(
+            body: RefreshIndicator(
+              onRefresh: () async {
+                _refreshData();
+              },
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(child: _buildHeader()),
+                  SliverToBoxAdapter(child: SizedBox(height: 24.h)),
+                  if (todoState is LoadingTodos)
+                    SliverFillRemaining(
+                      child: Center(
+                        child: Lottie.asset(
+                          MediaRes.loadingAnimation1,
+                        ),
+                      ),
+                    )
+                  else if (todoState is TodoLoaded)
+                    SliverToBoxAdapter(
+                      child: CardGrid(
+                        todoLists: widget.todoList,
+                        todoModel: todoState.todos,
+                      ),
+                    )
+                  else
+                    const SliverFillRemaining(
+                      child: Center(child: Text('No todos available')),
+                    ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -110,7 +128,8 @@ class _HomeViewWithDataState extends State<HomeViewWithData> with WidgetsBinding
               ),
               SizedBox(height: 4.h),
               Text(
-                'You have successfully\nfinished ${widget.todolistLength} notes',
+                'You have successfully\nfinished ${widget.todolistLength} notes'
+                ,
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 12.sp,

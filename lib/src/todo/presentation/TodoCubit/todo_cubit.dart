@@ -26,7 +26,7 @@ class TodoCubit extends Cubit<TodoState> {
   final UpdateTodoUsecase _updateTodo;
 
   Future<void> createTodo(
-      CreateTodoUsecaseParams createTodoUsecaseParams) async {
+      CreateTodoUsecaseParams createTodoUsecaseParams,) async {
     emit(const CreatingTodo());
     final result = await _createTodo(createTodoUsecaseParams);
     result.fold(
@@ -36,7 +36,7 @@ class TodoCubit extends Cubit<TodoState> {
   }
 
   Future<void> updateTodo(
-      UpdateTodoUsecaseParams updateTodoUsecaseParams) async {
+      UpdateTodoUsecaseParams updateTodoUsecaseParams,) async {
     emit(const UpdatingTodo());
     final result = await _updateTodo(updateTodoUsecaseParams);
     result.fold(
@@ -49,12 +49,15 @@ class TodoCubit extends Cubit<TodoState> {
   }
 
   Future<void> deleteTodos(
-      DeleteTodoUseCaseParams deleteTodoUseCaseParams) async {
+      DeleteTodoUseCaseParams deleteTodoUseCaseParams,) async {
     emit(const DeletingTodo());
     final result = await _deleteTodo(deleteTodoUseCaseParams);
     result.fold(
       (failure) => emit(TodoError(failure.errorMessage)),
-      (_) => emit(const TodoDeleted()),
+      (_) {
+        emit(const TodoDeleted());
+        getTodos();
+      }
     );
   }
 

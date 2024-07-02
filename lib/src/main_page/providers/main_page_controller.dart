@@ -4,10 +4,10 @@ import 'package:pridera_assesment_task/core/commons/app/tab_navigator.dart';
 import 'package:pridera_assesment_task/core/commons/views/utils/persistent_views.dart';
 import 'package:pridera_assesment_task/core/services/injection_container/injector_container.dart';
 import 'package:pridera_assesment_task/src/auth/presentation/auth/auth_bloc.dart';
-import 'package:pridera_assesment_task/src/todo/presentation/TodoCubit/todo_cubit.dart';
-import 'package:pridera_assesment_task/src/todo/presentation/TodoListCubit/todo_list_cubit.dart';
 import 'package:pridera_assesment_task/src/home/presentation/views/home_view.dart';
 import 'package:pridera_assesment_task/src/settings/presentation/views/settings_page.dart';
+import 'package:pridera_assesment_task/src/todo/presentation/TodoCubit/todo_cubit.dart';
+import 'package:pridera_assesment_task/src/todo/presentation/TodoListCubit/todo_list_cubit.dart';
 import 'package:provider/provider.dart';
 
 class MainPageController extends ChangeNotifier {

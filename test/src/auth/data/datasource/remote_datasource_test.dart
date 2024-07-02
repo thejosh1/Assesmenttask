@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -50,7 +49,7 @@ void main() {
   late GoogleSignInAuthentication googleSignInAuthentication;
   late AuthCredential authCredential;
   late DocumentReference<DataMap> documentReference;
-  final tUser = LocalUserModel.empty();
+  const tUser = LocalUserModel.empty();
 
   setUpAll(() async {
     authClient = MockFirebaseAuth();

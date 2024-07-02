@@ -40,14 +40,17 @@ class CardGrid extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (BuildContext context) =>
                         BlocProvider(
-                          create: (context) => sl<TodoCubit>(),
+                          create: (context) => sl<TodoCubit>()..getTodos(),
                           child: TodoScreen(
                             title: todo.title,
                             listId: todo.id,
                           ),
                         ),
                   ),
-                );
+                ).then((_) {
+                  // Refresh todos when returning from TodoScreen
+                  context.read<TodoCubit>().getTodos();
+                });
               },
               child: GridCard(
                 title: todo.title,

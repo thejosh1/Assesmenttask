@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -71,7 +70,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (googleUser == null) {
         throw const ServerException(
             message: "Couldn't' complete authentication",
-            statusCode: 'Unknown Error');
+            statusCode: 'Unknown Error',);
       }
 
       final googleAuth = await googleUser.authentication;
@@ -106,7 +105,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<LocalUserModel> signIn(
-      {required String email, required String password}) async {
+      {required String email, required String password,}) async {
     try {
       final result = await _authClient.signInWithEmailAndPassword(
         email: email,
@@ -149,7 +148,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<void> signUp(
       {required String email,
       required String password,
-      required String fullName}) async {
+      required String fullName,}) async {
     try {
       final userCred = await _authClient.createUserWithEmailAndPassword(
         email: email,

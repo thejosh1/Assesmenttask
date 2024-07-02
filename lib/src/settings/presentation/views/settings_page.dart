@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -75,8 +74,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
-                          color: AppColors.lightTitle),
-                    )
+                          color: AppColors.lightTitle,),
+                    ),
                   ],
                 ),
                 const Divider(
@@ -117,7 +116,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             fontSize: 16.sp,
                             color: AppColors.errorColor,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

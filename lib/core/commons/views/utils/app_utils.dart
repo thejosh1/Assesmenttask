@@ -96,7 +96,7 @@ class AppUtils {
                         border: Border.all(
                           color: AppColors.primaryColor,
                         ),
-                        color: Colors.white
+                        color: Colors.white,
                       ),
                       child: Center(
                         child: Text(
@@ -135,7 +135,7 @@ class AppUtils {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
