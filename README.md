@@ -1,16 +1,3 @@
 # pridera_assesment_task
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Did not implement the facebok functionality because the time to set up and wait for approval from facebook would have had me past the deadline. I haven't used facebook for authentication before, mostly twitter or google. would add the functionality tomorrow, but the other authentication methods work very well
