@@ -143,7 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               );
                         }
                       },
-                      child: const kButton(
+                      child: const KButton(
                         color: AppColors.primaryColor,
                         title: 'Register',
                         textColor: Colors.white,

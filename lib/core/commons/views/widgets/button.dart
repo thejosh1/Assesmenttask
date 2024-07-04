@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class kButton extends StatelessWidget {
-  const kButton({
+class KButton extends StatelessWidget {
+  const KButton({
     required this.color,
     required this.title,
     required this.textColor,

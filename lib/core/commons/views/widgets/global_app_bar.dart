@@ -3,7 +3,7 @@ import 'package:pridera_assesment_task/core/commons/views/widgets/nested_back_bu
 import 'package:pridera_assesment_task/core/res/colors.dart';
 
 class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
-  GlobalAppBar({super.key, this.titleText});
+  const GlobalAppBar({super.key, this.titleText});
   final String? titleText;
 
   @override
@@ -25,5 +25,5 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size preferredSize = const Size.fromHeight(kToolbarHeight);
+  final preferredSize = const Size.fromHeight(kToolbarHeight);
 }

@@ -60,7 +60,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Padding(
                 padding: EdgeInsets.only(left: 16.w),
                 child: Text(
-                  'Jot Down anything you want to achieve, today or in the future',
+                  'Jot Down anything you want to achieve, today or in the '
+                      'future',
                   style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
@@ -75,7 +76,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 onTap: () {
                   context.read<OnboardingCubit>().cacheFirstTimer();
                 },
-                child: const kButton(
+                child: const KButton(
                   color: Colors.white,
                   title: "Let's Get Started",
                   textColor: AppColors.primaryColor,

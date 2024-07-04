@@ -29,21 +29,7 @@ class _HomeViewWithDataState extends State<HomeViewWithData>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     _refreshData();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _refreshData();
-    }
   }
 
   void _refreshData() {

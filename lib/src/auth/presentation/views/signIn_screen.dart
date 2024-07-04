@@ -132,7 +132,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               );
                         }
                       },
-                      child: const kButton(
+                      child: const KButton(
                         color: AppColors.primaryColor,
                         title: 'Login',
                         textColor: Colors.white,
