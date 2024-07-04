@@ -67,35 +67,30 @@ class _HomeViewWithDataState extends State<HomeViewWithData>
         },
         builder: (context, todoState) {
           return Scaffold(
-            body: RefreshIndicator(
-              onRefresh: () async {
-                _refreshData();
-              },
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(child: _buildHeader()),
-                  SliverToBoxAdapter(child: SizedBox(height: 24.h)),
-                  if (todoState is LoadingTodos)
-                    SliverFillRemaining(
-                      child: Center(
-                        child: Lottie.asset(
-                          MediaRes.loadingAnimation1,
-                        ),
+            body: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(child: _buildHeader()),
+                SliverToBoxAdapter(child: SizedBox(height: 24.h)),
+                if (todoState is LoadingTodos)
+                  SliverFillRemaining(
+                    child: Center(
+                      child: Lottie.asset(
+                        MediaRes.loadingAnimation1,
                       ),
-                    )
-                  else if (todoState is TodoLoaded)
-                    SliverToBoxAdapter(
-                      child: CardGrid(
-                        todoLists: widget.todoList,
-                        todoModel: todoState.todos,
-                      ),
-                    )
-                  else
-                    const SliverFillRemaining(
-                      child: Center(child: Text('No todos available')),
                     ),
-                ],
-              ),
+                  )
+                else if (todoState is TodoLoaded)
+                  SliverToBoxAdapter(
+                    child: CardGrid(
+                      todoLists: widget.todoList,
+                      todoModel: todoState.todos,
+                    ),
+                  )
+                else
+                  const SliverFillRemaining(
+                    child: Center(child: Text('No todos available')),
+                  ),
+              ],
             ),
           );
         },
