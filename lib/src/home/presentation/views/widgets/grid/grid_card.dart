@@ -7,12 +7,10 @@ class GridCard extends StatelessWidget {
   const GridCard({
     required this.title,
     required this.todoItemName,
-    required this.isCompleted,
     super.key,
   });
   final String title;
   final List<TodoItem> todoItemName;
-  final bool isCompleted;
 
   @override
   Widget build(BuildContext context) {

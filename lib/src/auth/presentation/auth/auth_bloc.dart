@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pridera_assesment_task/src/auth/domain/entities/user.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/forgot_password_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_in_usecase.dart';

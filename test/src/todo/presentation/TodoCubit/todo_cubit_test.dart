@@ -64,7 +64,7 @@ void main() {
   });
 
   group('create Todo', () {
-    blocTest(
+    blocTest<TodoCubit, TodoState>(
       'emits [CreatingTodo, Todo Created] when create todo is called',
       build: () {
         when(() => createTodo(any()))
@@ -82,11 +82,14 @@ void main() {
       },
     );
 
-    blocTest(
+    blocTest<TodoCubit, TodoState>(
       'emits [CreatingTodo, TodoError] when create todo is called',
       build: () {
-        when(() => createTodo(any())).thenAnswer((_) async => Left(
-            ServerFailure(message: 'Something went wrong', statusCode: '500'),),);
+        when(() => createTodo(any())).thenAnswer(
+          (_) async => Left(
+            ServerFailure(message: 'Something went wrong', statusCode: '500'),
+          ),
+        );
         return todoCubit;
       },
       act: (cubit) => cubit.createTodo(tCreateTodoParams),
@@ -102,7 +105,7 @@ void main() {
   });
 
   group('update Todo', () {
-    blocTest(
+    blocTest<TodoCubit, TodoState>(
       'emits [UpdatingTodo, Todo Updated] when update todo is called',
       build: () {
         when(() => updateTodo(any()))
@@ -120,11 +123,14 @@ void main() {
       },
     );
 
-    blocTest(
+    blocTest<TodoCubit, TodoState>(
       'emits [UpdatingTodo, TodoError] when update todo is called',
       build: () {
-        when(() => updateTodo(any())).thenAnswer((_) async => Left(
-            ServerFailure(message: 'Something went wrong', statusCode: '500'),),);
+        when(() => updateTodo(any())).thenAnswer(
+          (_) async => Left(
+            ServerFailure(message: 'Something went wrong', statusCode: '500'),
+          ),
+        );
         return todoCubit;
       },
       act: (cubit) => cubit.updateTodo(tUpdateTodoParams),
@@ -140,7 +146,7 @@ void main() {
   });
 
   group('delete Todo', () {
-    blocTest(
+    blocTest<TodoCubit, TodoState>(
       'emits [DeletingTodo, TodoDeleted] when delete todo is called',
       build: () {
         when(() => deleteTodo(any()))
@@ -158,7 +164,7 @@ void main() {
       },
     );
 
-    blocTest(
+    blocTest<TodoCubit, TodoState>(
       'emits [DeletingTodo, TodoError] when create todo is called',
       build: () {
         when(() => deleteTodo(any())).thenAnswer(
@@ -181,7 +187,7 @@ void main() {
   });
 
   group('get all Todo', () {
-    blocTest(
+    blocTest<TodoCubit, TodoState>(
       'emits [TodoListLoading, TodoListLoaded] when getTodoList is called',
       build: () {
         when(() => getTodos()).thenAnswer((_) async => const Right([tTodo]));
@@ -198,7 +204,7 @@ void main() {
       },
     );
 
-    blocTest(
+    blocTest<TodoCubit, TodoState>(
       'emits [TodoListLoading, TodoListError] when getTodoList is called',
       build: () {
         when(() => getTodos()).thenAnswer(

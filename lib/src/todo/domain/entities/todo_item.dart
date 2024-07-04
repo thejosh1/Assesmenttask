@@ -11,20 +11,6 @@ class TodoItem extends Equatable {
   const TodoItem.empty()
       : this(id: '', listId: '', title: '', isCompleted: false);
 
-  // TodoItem copyWith({
-  //   String? id,
-  //   String? listId,
-  //   String? title,
-  //   bool? isCompleted,
-  // }) {
-  //   return TodoItem(
-  //     id: id ?? this.id,
-  //     listId: listId ?? this.listId,
-  //     title: title ?? this.title,
-  //     isCompleted: isCompleted ?? this.isCompleted,
-  //   );
-  // }
-
   final String id;
   final String listId;
   final String title;

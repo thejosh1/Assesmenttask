@@ -40,4 +40,3 @@ class TodoListError extends TodoListState {
   @override
   List<String> get props => [errorMessage];
 }
-

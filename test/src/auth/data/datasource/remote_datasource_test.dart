@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
@@ -40,7 +39,6 @@ class MockUserCredential extends Mock implements UserCredential {
 void main() {
   late FirebaseAuth authClient;
   late FirebaseFirestore cloudStoreClient;
-  late MockFirebaseStorage dbClient;
   late AuthRemoteDataSourceImpl dataSource;
   late UserCredential userCredential;
   late MockUser mockUser;
@@ -58,7 +56,6 @@ void main() {
     await documentReference.set(
       tUser.copyWith(uid: documentReference.id).toMap(),
     );
-    dbClient = MockFirebaseStorage();
     mockUser = MockUser()..uid = documentReference.id;
     userCredential = MockUserCredential(mockUser);
     googleSignIn = MockGoogleSignIn();
@@ -72,7 +69,7 @@ void main() {
       googleSignIn: googleSignIn,
       authClient: authClient,
       cloudStoreClient: cloudStoreClient,
-      dbClient: dbClient,
+
     );
     registerFallbackValue(authCredential);
     when(() => authClient.currentUser).thenReturn(mockUser);

@@ -38,7 +38,6 @@ class _TodoScreenState extends State<TodoScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // await context.read<TodoListCubit>().getTodoLists();
         await context.read<TodoCubit>().getTodos();
         return true;
       },
@@ -56,7 +55,7 @@ class _TodoScreenState extends State<TodoScreen> {
         },
         builder: (context, state) {
           return Scaffold(
-            appBar: GlobalAppBar(titleText: ''),
+            appBar: const GlobalAppBar(titleText: ''),
             body: Padding(
               padding: EdgeInsets.only(left: 16.sp, top: 24.h, right: 28.w),
               child: Column(
@@ -187,8 +186,8 @@ class _TodoScreenState extends State<TodoScreen> {
       onTap: () {
         Navigator.of(context)
             .push(
-          MaterialPageRoute(
-            builder: (BuildContext context) => BlocProvider(
+          MaterialPageRoute<void>(
+            builder: (_) => BlocProvider(
               create: (_) => sl<TodoCubit>(),
               child: AddTodoItem(listId: widget.listId),
             ),

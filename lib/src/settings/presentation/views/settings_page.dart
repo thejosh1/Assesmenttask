@@ -27,7 +27,7 @@ class _SettingsPageState extends State<SettingsPage> {
     final email = context.currentUser!.email;
     final fullName = context.currentUser!.fullName;
     return Scaffold(
-      appBar: GlobalAppBar(
+      appBar: const GlobalAppBar(
         titleText: 'Settings',
       ),
       body: BlocConsumer<AuthBloc, AuthState>(

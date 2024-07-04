@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pridera_assesment_task/core/commons/app/todo_provider.dart';
 import 'package:pridera_assesment_task/core/commons/app/user_provider.dart';
 import 'package:pridera_assesment_task/core/res/colors.dart';
 import 'package:pridera_assesment_task/core/res/fonts.dart';
@@ -13,7 +12,7 @@ import 'package:pridera_assesment_task/firebase_options.dart';
 import 'package:pridera_assesment_task/src/main_page/providers/main_page_controller.dart';
 import 'package:provider/provider.dart';
 
-Future main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -38,7 +37,6 @@ class MyApp extends StatelessWidget {
             providers: [
               ChangeNotifierProvider(create: (_) => UserProvider()),
               ChangeNotifierProvider(create: (_) => MainPageController()),
-              ChangeNotifierProvider(create: (_) => TodoProvider()),
             ],
           child: MaterialApp(
             title: 'MyArteLab',

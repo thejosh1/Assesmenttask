@@ -50,7 +50,7 @@ class _AddTodoState extends State<AddTodo> {
           return true;
         },
         child: Scaffold(
-          appBar: GlobalAppBar(titleText: ''),
+          appBar: const GlobalAppBar(titleText: ''),
           body: Form(
             key: formKey,
             child: Column(

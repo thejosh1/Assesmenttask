@@ -18,7 +18,7 @@ void main() {
   late TodoListCubit todoListCubit;
 
   const tTodoList = TodoListModel.empty();
-  final tCreateTodoListParams = CreateTodoListParams(todoList: tTodoList);
+  const tCreateTodoListParams = CreateTodoListParams(todoList: tTodoList);
 
   setUp(() {
     createTodoList = MockCreateTodoList();
@@ -41,7 +41,7 @@ void main() {
   });
 
   group('create TodoList', () {
-    blocTest(
+    blocTest<TodoListCubit, TodoListState>(
       'emits [CreatingTodoList, TodoListCreated] when create todo is called',
       build: () {
         when(() => createTodoList(any()))
@@ -59,11 +59,14 @@ void main() {
       },
     );
 
-    blocTest(
+    blocTest<TodoListCubit, TodoListState>(
       'emits [CreatingTodoList, TodoListError] when create todo is called',
       build: () {
-        when(() => createTodoList(any())).thenAnswer((_) async => Left(
-            ServerFailure(message: 'Something went wrong', statusCode: '500'),),);
+        when(() => createTodoList(any())).thenAnswer(
+          (_) async => Left(
+            ServerFailure(message: 'Something went wrong', statusCode: '500'),
+          ),
+        );
         return todoListCubit;
       },
       act: (cubit) => cubit.createTodoList(tCreateTodoListParams),
@@ -79,17 +82,17 @@ void main() {
   });
 
   group('get all TodoList', () {
-    blocTest(
+    blocTest<TodoListCubit, TodoListState>(
       'emits [TodoListLoading, TodoListLoaded] when getTodoList is called',
       build: () {
         when(() => getAllTodoList())
-            .thenAnswer((_) async => Right([tTodoList]));
+            .thenAnswer((_) async => const Right([tTodoList]));
         return todoListCubit;
       },
       act: (cubit) => cubit.getTodoLists(),
       expect: () => <TodoListState>[
         const LoadingTodoList(),
-        TodoListLoaded([tTodoList]),
+        const TodoListLoaded([tTodoList]),
       ],
       verify: (_) {
         verify(() => getAllTodoList()).called(1);
@@ -97,7 +100,7 @@ void main() {
       },
     );
 
-    blocTest(
+    blocTest<TodoListCubit, TodoListState>(
       'emits [TodoListLoading, TodoListError] when getTodoList is called',
       build: () {
         when(() => getAllTodoList()).thenAnswer(

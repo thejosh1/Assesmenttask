@@ -112,7 +112,6 @@ void main() {
   });
 
   group('sign up Event', () {
-    const tUser = LocalUserModel.empty();
     blocTest<AuthBloc, AuthState>(
       'should emit [AuthLoading, SignedUp] when [SignedUpEvent is added]',
       build: () {
@@ -172,7 +171,8 @@ void main() {
     const tUser = LocalUserModel.empty();
     //sign in with google
     blocTest<AuthBloc, AuthState>(
-      'should emit [AuthLoading] and [SignedInState] when sign in event is added',
+      'should emit [AuthLoading] and [SignedInState] when sign in event is '
+          'added',
       build: () {
         when(() => googleSignIn()).thenAnswer((_) async => const Right(tUser));
         return authBloc;
@@ -208,7 +208,8 @@ void main() {
 
   group('forgot password event', () {
     blocTest<AuthBloc, AuthState>(
-      'should emit [AuthLoading, ForgotPasswordEvent] when [ForgotPasswordEvent]'
+      'should emit [AuthLoading, ForgotPasswordEvent] when '
+          '[ForgotPasswordEvent]'
       ' is added and is successful',
       build: () {
         when(() => forgotPassword(any()))

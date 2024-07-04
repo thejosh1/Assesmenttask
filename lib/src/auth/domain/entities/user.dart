@@ -24,7 +24,6 @@ class LocalUser extends Equatable {
   final String fullName;
 
   @override
-  // TODO: implement props
   List<Object?> get props => [uid, email];
 
   LocalUser copyWith({

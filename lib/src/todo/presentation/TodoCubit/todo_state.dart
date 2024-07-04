@@ -56,6 +56,3 @@ class TodoError extends TodoState {
    @override
    List<String> get props => [errorMessage];
 }
-
-
-

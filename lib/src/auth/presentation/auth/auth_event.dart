@@ -33,7 +33,6 @@ class SignInWithGoogleEvent extends AuthEvent {
   const SignInWithGoogleEvent();
 
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 

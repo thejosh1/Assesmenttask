@@ -37,10 +37,10 @@ class CardGrid extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) =>
+                  MaterialPageRoute<void>(
+                    builder: (_) =>
                         BlocProvider(
-                          create: (context) => sl<TodoCubit>()..getTodos(),
+                          create: (_) => sl<TodoCubit>()..getTodos(),
                           child: TodoScreen(
                             title: todo.title,
                             listId: todo.id,
@@ -55,7 +55,6 @@ class CardGrid extends StatelessWidget {
               child: GridCard(
                 title: todo.title,
                 todoItemName: todoItem,
-                isCompleted: true,
               ),
             );
           },

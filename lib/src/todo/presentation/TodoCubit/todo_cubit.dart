@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pridera_assesment_task/src/todo/domain/entities/todo_item.dart';
 import 'package:pridera_assesment_task/src/todo/domain/usecase/todo_item/create_todo_item.dart';
 import 'package:pridera_assesment_task/src/todo/domain/usecase/todo_item/delete_todo.dart';

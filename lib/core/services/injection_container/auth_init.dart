@@ -21,11 +21,9 @@ Future<void> authInit() async {
         authClient: sl(),
         googleSignIn: sl(),
         cloudStoreClient: sl(),
-        dbClient: sl(),
       ),
     )
     ..registerLazySingleton(GoogleSignIn.new)
     ..registerLazySingleton(() => FirebaseAuth.instance)
-    ..registerLazySingleton(() => FirebaseFirestore.instance)
-    ..registerLazySingleton(() => FirebaseStorage.instance);
+    ..registerLazySingleton(() => FirebaseFirestore.instance);
 }

@@ -1,7 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pridera_assesment_task/core/errors/exceptions.dart';
@@ -33,16 +32,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required GoogleSignIn googleSignIn,
     required FirebaseAuth authClient,
     required FirebaseFirestore cloudStoreClient,
-    required FirebaseStorage dbClient,
   })  : _googleSignIn = googleSignIn,
         _cloudStoreClient = cloudStoreClient,
-        _dbClient = dbClient,
         _authClient = authClient;
 
   final GoogleSignIn _googleSignIn;
   final FirebaseAuth _authClient;
   final FirebaseFirestore _cloudStoreClient;
-  final FirebaseStorage _dbClient;
 
   @override
   Future<void> forgotPassword(String email) async {
@@ -172,7 +168,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<LocalUserModel> signInWIthFacebook() {
-    // TODO: implement signInWIthFacebook
     throw UnimplementedError();
   }
 
