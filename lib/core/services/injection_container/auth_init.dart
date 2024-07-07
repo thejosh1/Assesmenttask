@@ -7,6 +7,7 @@ Future<void> authInit() async {
               signIn: sl(),
               signUp: sl(),
             googleSignIn: sl(),
+            facebookSignIn: sl(),
             forgotPassword: sl(),
 
       ),
@@ -14,6 +15,7 @@ Future<void> authInit() async {
     ..registerLazySingleton(() => SignIn(sl()))
     ..registerLazySingleton(() => SignUp(sl()))
     ..registerLazySingleton(() => SignInWithGoogleAuth(sl()))
+    ..registerLazySingleton(() => FacebookSignIn(sl()))
     ..registerLazySingleton(() => ForgotPassword(sl()))
     ..registerLazySingleton<AuthRepo>(() => AuthRepoImpl(sl()))
     ..registerLazySingleton<AuthRemoteDataSource>(

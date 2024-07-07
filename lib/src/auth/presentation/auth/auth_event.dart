@@ -36,6 +36,13 @@ class SignInWithGoogleEvent extends AuthEvent {
   List<Object?> get props => [];
 }
 
+class SignInWithFacebookEvent extends AuthEvent {
+  const SignInWithFacebookEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class ForgotPasswordEvent extends AuthEvent {
   const ForgotPasswordEvent({required this.email});
 

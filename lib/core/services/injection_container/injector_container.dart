@@ -11,6 +11,7 @@ import 'package:pridera_assesment_task/src/auth/data/repo/auth_repo_implementati
 import 'package:pridera_assesment_task/src/auth/domain/repo/auth_repo.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/forgot_password_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_in_usecase.dart';
+import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_in_with_facebook_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_in_with_google_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_up_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/presentation/auth/auth_bloc.dart';

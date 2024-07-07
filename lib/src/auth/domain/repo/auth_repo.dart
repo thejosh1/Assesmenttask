@@ -18,6 +18,5 @@ abstract class AuthRepo {
   ResultFuture<void> forgotPassword(String email);
 
   ResultFuture<LocalUser> signInWithGoogle();
-
   ResultFuture<LocalUser> signInWithFacebook();
 }

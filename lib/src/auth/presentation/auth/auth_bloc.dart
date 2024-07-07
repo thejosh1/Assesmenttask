@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pridera_assesment_task/src/auth/domain/entities/user.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/forgot_password_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_in_usecase.dart';
+import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_in_with_facebook_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_in_with_google_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_up_usecase.dart';
 
@@ -14,10 +15,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required SignIn signIn,
     required SignUp signUp,
     required SignInWithGoogleAuth googleSignIn,
+    required FacebookSignIn facebookSignIn,
     required ForgotPassword forgotPassword,
   })  : _signIn = signIn,
         _signUp = signUp,
         _signInWithGoogle = googleSignIn,
+        _signInWithFacebook = facebookSignIn,
         _forgotPassword = forgotPassword,
         super(const AuthInitial()) {
     on<AuthEvent>((event, emit) {
@@ -27,12 +30,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignInEvent>(_signInHandler);
     on<SignUpEvent>(_signUpHandler);
     on<SignInWithGoogleEvent>(_googleSignInHandler);
+    on<SignInWithFacebookEvent>(_facebookSignInHandler);
     on<ForgotPasswordEvent>(_forgotPasswordHandler);
   }
 
   final SignIn _signIn;
   final SignUp _signUp;
   final SignInWithGoogleAuth _signInWithGoogle;
+  final FacebookSignIn _signInWithFacebook;
   final ForgotPassword _forgotPassword;
 
   Future<void> _signInHandler(
@@ -75,6 +80,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.fold(
       (failure) => emit(AuthError(errorMessage: failure.errorMessage)),
       (_) => emit(const SignInWithGoogle()),
+    );
+  }
+
+  Future<void> _facebookSignInHandler(
+      SignInWithFacebookEvent event,
+      Emitter<AuthState> emit,
+      ) async {
+    final result = await _signInWithFacebook();
+    result.fold(
+          (failure) => emit(AuthError(errorMessage: failure.errorMessage)),
+          (_) => emit(const SignInWithFacebook()),
     );
   }
 

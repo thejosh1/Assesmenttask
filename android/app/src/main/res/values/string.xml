@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pridera</string>
+    <string name="facebook_app_id">1002041414468878</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">a577cebbe739516edeb5426fe838a6c4</string>
+</resources>

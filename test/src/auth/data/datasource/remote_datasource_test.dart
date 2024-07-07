@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
@@ -36,6 +37,12 @@ class MockUserCredential extends Mock implements UserCredential {
   }
 }
 
+class MockFacebookAuth extends Mock implements FacebookAuth {}
+
+class MockLoginResult extends Mock implements LoginResult {}
+
+class MockAccessToken extends Mock implements AccessToken {}
+
 void main() {
   late FirebaseAuth authClient;
   late FirebaseFirestore cloudStoreClient;
@@ -48,6 +55,9 @@ void main() {
   late AuthCredential authCredential;
   late DocumentReference<DataMap> documentReference;
   const tUser = LocalUserModel.empty();
+  late MockFacebookAuth facebookAuth;
+  late MockLoginResult loginResult;
+  late MockAccessToken accessToken;
 
   setUpAll(() async {
     authClient = MockFirebaseAuth();
@@ -56,6 +66,9 @@ void main() {
     await documentReference.set(
       tUser.copyWith(uid: documentReference.id).toMap(),
     );
+    facebookAuth = MockFacebookAuth();
+    loginResult = MockLoginResult();
+    accessToken = MockAccessToken();
     mockUser = MockUser()..uid = documentReference.id;
     userCredential = MockUserCredential(mockUser);
     googleSignIn = MockGoogleSignIn();
@@ -69,10 +82,24 @@ void main() {
       googleSignIn: googleSignIn,
       authClient: authClient,
       cloudStoreClient: cloudStoreClient,
-
     );
     registerFallbackValue(authCredential);
     when(() => authClient.currentUser).thenReturn(mockUser);
+    when(() => facebookAuth.login()).thenAnswer((_) async => loginResult);
+    when(() => loginResult.status).thenReturn(LoginStatus.success);
+    when(() => loginResult.accessToken).thenReturn(accessToken);
+    when(() => accessToken.tokenString).thenReturn('mock_token');
+
+    // Setup Firebase Auth mocks
+    when(() => authClient.signInWithCredential(any()))
+        .thenAnswer((_) async => MockUserCredential(mockUser));
+
+    // Setup Firestore mock
+    await cloudStoreClient.collection('users').doc(mockUser.uid).set({
+      'uid': mockUser.uid,
+      'email': 'test@example.com',
+      'name': 'Test User',
+    });
   });
 
   final tFirebaseAuthException = FirebaseAuthException(
@@ -217,7 +244,7 @@ void main() {
           throwsA(isA<ServerException>()),
         );
         verify(
-              () => authClient.createUserWithEmailAndPassword(
+          () => authClient.createUserWithEmailAndPassword(
             email: tEmail,
             password: tPassword,
           ),
@@ -237,14 +264,14 @@ void main() {
     });
 
     test('should return null when google login is cancelled by the user',
-            () async {
-          googleSignIn.setIsCancelled(true);
-          final signInAccount = await googleSignIn.signIn();
-          expect(signInAccount, isNull);
-        });
+        () async {
+      googleSignIn.setIsCancelled(true);
+      final signInAccount = await googleSignIn.signIn();
+      expect(signInAccount, isNull);
+    });
     test(
         'testing google login twice, once cancelled, once not cancelled at '
-            'the same test.', () async {
+        'the same test.', () async {
       googleSignIn.setIsCancelled(true);
       final signInAccount = await googleSignIn.signIn();
       expect(signInAccount, isNull);
@@ -264,7 +291,7 @@ void main() {
 
     test(
       'should throw [ServerException] when [FirebaseAuthException] is thrown',
-          () async {
+      () async {
         when(() => authClient.signInWithCredential(any()))
             .thenThrow(tFirebaseAuthException);
 

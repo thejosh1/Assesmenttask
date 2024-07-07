@@ -36,6 +36,10 @@ class SignInWithGoogle extends AuthState {
   const SignInWithGoogle();
 }
 
+class SignInWithFacebook extends AuthState {
+  const SignInWithFacebook();
+}
+
 class AuthError extends AuthState {
   const AuthError({required this.errorMessage});
 

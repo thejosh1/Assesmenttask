@@ -186,19 +186,28 @@ class _SignInScreenState extends State<SignInScreen> {
                       SizedBox(
                         width: 36.w,
                       ),
-                      Container(
-                        width: 54.w,
-                        height: 54.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.r),
-                          border: Border.all(color: AppColors.baseGrey),
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            MediaRes.facebookIcon,
-                            width: 29.55,
-                            height: 29.55,
-                            fit: BoxFit.cover,
+                      GestureDetector(
+                        onTap: () {
+                          FirebaseAuth.instance.currentUser?.reload();
+                          context.read<AuthBloc>().add(
+                            const SignInWithFacebookEvent(),
+                          );
+                          setState(() {});
+                        },
+                        child: Container(
+                          width: 54.w,
+                          height: 54.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.r),
+                            border: Border.all(color: AppColors.baseGrey),
+                          ),
+                          child: Center(
+                            child: Image.asset(
+                              MediaRes.facebookIcon,
+                              width: 29.55,
+                              height: 29.55,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),

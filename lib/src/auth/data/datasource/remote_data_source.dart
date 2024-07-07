@@ -1,7 +1,7 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pridera_assesment_task/core/errors/exceptions.dart';
 import 'package:pridera_assesment_task/core/utility/typedef.dart';
@@ -65,8 +65,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       //user cancels the sign in
       if (googleUser == null) {
         throw const ServerException(
-            message: "Couldn't' complete authentication",
-            statusCode: 'Unknown Error',);
+          message: "Couldn't' complete authentication",
+          statusCode: 'Unknown Error',
+        );
       }
 
       final googleAuth = await googleUser.authentication;
@@ -100,8 +101,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<LocalUserModel> signIn(
-      {required String email, required String password,}) async {
+  Future<LocalUserModel> signIn({
+    required String email,
+    required String password,
+  }) async {
     try {
       final result = await _authClient.signInWithEmailAndPassword(
         email: email,
@@ -141,10 +144,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> signUp(
-      {required String email,
-      required String password,
-      required String fullName,}) async {
+  Future<void> signUp({
+    required String email,
+    required String password,
+    required String fullName,
+  }) async {
     try {
       final userCred = await _authClient.createUserWithEmailAndPassword(
         email: email,
@@ -167,8 +171,45 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<LocalUserModel> signInWIthFacebook() {
-    throw UnimplementedError();
+  Future<LocalUserModel> signInWIthFacebook() async {
+    try {
+      final result = await FacebookAuth.instance.login(
+        permissions: ['email', 'public_profile'],
+      );
+      if (result.status != LoginStatus.success) {
+        throw ServerException(
+          message: result.message!,
+          statusCode: 'Unknown Error',
+        );
+      }
+
+      // you are logged in
+      final accessToken = result.accessToken!;
+      final credential =
+      FacebookAuthProvider.credential(accessToken.tokenString);
+
+      final authResult = await _authClient.signInWithCredential(credential);
+      final user = authResult.user;
+
+      //check if user exists in the database
+      var userData = await _getUserData(user!.uid);
+
+      if (!userData.exists) {
+        await _setUserData(user);
+        userData = await _getUserData(user.uid);
+      }
+      return LocalUserModel.fromMap(userData.data()!);
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Error Occurred',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e, s) {
+      debugPrintStack(stackTrace: s);
+      throw ServerException(message: e.toString(), statusCode: '400');
+    }
   }
 
   Future<DocumentSnapshot<DataMap>> _getUserData(String uid) async {

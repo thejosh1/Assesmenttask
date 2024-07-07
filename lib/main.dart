@@ -1,3 +1,4 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,11 @@ Future<void> main() async {
   );
   FirebaseUIAuth.configureProviders([EmailAuthProvider()]);
   await init();
+
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: AndroidProvider.debug,
+  );
+
   runApp(const MyApp());
 }
 
@@ -39,7 +45,7 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider(create: (_) => MainPageController()),
             ],
           child: MaterialApp(
-            title: 'MyArteLab',
+            title: 'Pridera',
             theme: ThemeData(
               visualDensity: VisualDensity.adaptivePlatformDensity,
               colorScheme: ColorScheme.fromSeed(

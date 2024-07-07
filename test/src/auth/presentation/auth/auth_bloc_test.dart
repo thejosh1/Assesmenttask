@@ -6,6 +6,7 @@ import 'package:pridera_assesment_task/core/errors/failures.dart';
 import 'package:pridera_assesment_task/src/auth/data/model/local_user_model.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/forgot_password_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_in_usecase.dart';
+import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_in_with_facebook_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_in_with_google_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/domain/usecase/sign_up_usecase.dart';
 import 'package:pridera_assesment_task/src/auth/presentation/auth/auth_bloc.dart';
@@ -18,10 +19,13 @@ class MockForgotPassword extends Mock implements ForgotPassword {}
 
 class MockGoogleSignIn extends Mock implements SignInWithGoogleAuth {}
 
+class MockFacebookSignIn extends Mock implements FacebookSignIn {}
+
 void main() {
   late SignIn signIn;
   late SignUp signUp;
   late SignInWithGoogleAuth googleSignIn;
+  late FacebookSignIn facebookSignIn;
   late ForgotPassword forgotPassword;
   late AuthBloc authBloc;
 
@@ -33,10 +37,12 @@ void main() {
     signUp = MockSignUp();
     forgotPassword = MockForgotPassword();
     googleSignIn = MockGoogleSignIn();
+    facebookSignIn = MockFacebookSignIn();
     authBloc = AuthBloc(
       signIn: signIn,
       signUp: signUp,
       googleSignIn: googleSignIn,
+      facebookSignIn: facebookSignIn,
       forgotPassword: forgotPassword,
     );
   });
@@ -202,6 +208,45 @@ void main() {
       verify: (_) {
         verify(() => googleSignIn()).called(1);
         verifyNoMoreInteractions(googleSignIn);
+      },
+    );
+  });
+
+  group('Facebook signIn event', () {
+    const tUser = LocalUserModel.empty();
+    //sign in with google
+    blocTest<AuthBloc, AuthState>(
+      'should emit [AuthLoading] and [SignedInState] when sign in event is '
+          'added',
+      build: () {
+        when(() =>facebookSignIn()).thenAnswer((_) async => const Right(tUser));
+        return authBloc;
+      },
+      act: (bloc) => bloc.add(const SignInWithFacebookEvent()),
+      expect: () => [const AuthLoading(), const SignInWithFacebook()],
+      verify: (_) {
+        verify(() => facebookSignIn()).called(1);
+        verifyNoMoreInteractions(facebookSignIn);
+      },
+    );
+
+    //error state for facebook
+    blocTest<AuthBloc, AuthState>(
+      'should emit [AuthLoading] and [AuthError] when sign in fails',
+      build: () {
+        when(() => facebookSignIn()).thenAnswer(
+              (_) async => Left(tServerFailure),
+        );
+        return authBloc;
+      },
+      act: (bloc) => bloc.add(const SignInWithFacebookEvent()),
+      expect: () => [
+        const AuthLoading(),
+        AuthError(errorMessage: tServerFailure.errorMessage),
+      ],
+      verify: (_) {
+        verify(() => facebookSignIn()).called(1);
+        verifyNoMoreInteractions(facebookSignIn);
       },
     );
   });
